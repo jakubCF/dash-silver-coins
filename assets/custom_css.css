@@ -1,0 +1,13 @@
+.custom-control-input {
+    display: none;
+}
+.custom-radio .custom-control-label::before {
+    display: none;
+}
+.custom-radio .custom-control-label::after {
+    display: none;
+}
+.float-dropdown{
+    width: 300px;
+    float: left;
+}
