@@ -140,28 +140,28 @@ def serve_layout():
             dbc.Col([
                 dbc.Row([
                     dbc.Col([
-                        html.Img(id='image-tl2', src=df_products[df_products["shortname"] == "The Lion 2 Oz"]["imgurl"].values[0], className="img-fluid")
+                        html.Img(id='image-tl2', src=df_products[df_products["shortname"] == "The Yale 2 Oz"]["imgurl"].values[0], className="img-fluid")
                     ], width={"size":3}, className="my-auto"),
                     dbc.Col([
-                        html.H3("The Lion 2 Oz"),
+                        html.H3("The Yale 2 Oz"),
                         html.Div(id="last-update-tl2"),
                         dcc.Graph(id="sparkline-tl2", config=dict(displayModeBar=False, staticPlot=True), style={"max-width":"200px", "height":"50px", "float":"left"}),
-                        html.H4(children=[df[df["shortname"]=="The Lion 2 Oz"].query("update_date == update_date.max()")["price"].values[0], " Kč"], style={"height":"50px"}),
-                        dcc.Link(children=["Přejít na produkt"], href=df_products[df_products["shortname"]=="The Lion 2 Oz"]["url"].values[0], target="_blank")
+                        html.H4(children=[df[df["shortname"]=="The Yale 2 Oz"].query("update_date == update_date.max()")["price"].values[0], " Kč"], style={"height":"50px"}),
+                        dcc.Link(children=["Přejít na produkt"], href=df_products[df_products["shortname"]=="The Yale 2 Oz"]["url"].values[0], target="_blank")
                     ], width={"size":9})
                 ], className="border border-primary rounded mr-2 py-2")
             ], width={"size":5}),
             dbc.Col([
                 dbc.Row([
                     dbc.Col([
-                        html.Img(id='image-coin-wg2', src=df_products[df_products["shortname"] == "The White Greyhound 2 Oz"]["imgurl"].values[0], className="img-fluid")
+                        html.Img(id='image-coin-wg2', src=df_products[df_products["shortname"] == "The Falcon 2 Oz"]["imgurl"].values[0], className="img-fluid")
                     ], width={"size":3}, className="my-auto"),
                     dbc.Col([
-                        html.H3("The White Greyhound 2 Oz"),
+                        html.H3("The Falcon 2 Oz"),
                         html.Div(id="last-update-wg2"),
                         dcc.Graph(id="sparkline-wg2", config=dict(displayModeBar=False, staticPlot=True), style={"max-width":"200px", "height":"50px", "float":"left"}),
-                        html.H4(children=[df[df["shortname"]=="The White Greyhound 2 Oz"].query("update_date == update_date.max()")["price"].values[0], " Kč"], style={"height":"50px"}),
-                        dcc.Link(children=["Přejít na produkt"], href=df_products[df_products["shortname"]=="The White Greyhound 2 Oz"]["url"].values[0], target="_blank")
+                        html.H4(children=[df[df["shortname"]=="The Falcon 2 Oz"].query("update_date == update_date.max()")["price"].values[0], " Kč"], style={"height":"50px"}),
+                        dcc.Link(children=["Přejít na produkt"], href=df_products[df_products["shortname"]=="The Falcon 2 Oz"]["url"].values[0], target="_blank")
                     ], width={"size":9})
                 ], className="border border-primary rounded ml-2 py-2")
             ], width={"size":5})
