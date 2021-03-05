@@ -268,11 +268,11 @@ def update_df(clicks):
     figwp = create_sparkline("Wiener Philharmoniker 1 Oz", df)
     last_uptate_wp = "Last update: " + str(df[df["shortname"] == "Wiener Philharmoniker 1 Oz"]["update_date"].max())
 
-    figtl2 = create_sparkline("The Lion 2 Oz", df)
-    last_uptate_tl2 = "Last update: " + str(df[df["shortname"] == "The Lion 2 Oz"]["update_date"].max())
+    figtl2 = create_sparkline("The Yale 2 Oz", df)
+    last_uptate_tl2 = "Last update: " + str(df[df["shortname"] == "The Yale 2 Oz"]["update_date"].max())
 
-    figwg2 = create_sparkline("The White Greyhound 2 Oz", df)
-    last_uptate_wg2 = "Last update: " + str(df[df["shortname"] == "The White Greyhound 2 Oz"]["update_date"].max())
+    figwg2 = create_sparkline("The Falcon 2 Oz", df)
+    last_uptate_wg2 = "Last update: " + str(df[df["shortname"] == "The Falcon 2 Oz"]["update_date"].max())
 
     return "Last refresh at: " + datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"), last_update_ml, figml, last_uptate_wp, figwp, last_uptate_tl2, figtl2, last_uptate_wg2, figwg2
 
