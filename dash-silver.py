@@ -100,6 +100,7 @@ def serve_layout():
     df_rates = get_df_rates()
     layout = dbc.Container([
         dcc.Interval(id = "auto-refresh", interval = 60*60*1000),
+        dcc.Interval(id = "auto-refresh2", interval = 60*60*1000),
         html.Div(id='refresh-status'),
         dbc.Row([
             dbc.Col([html.H2('Dash - Silver Coins Price', className="text-center mt-3"),
@@ -160,7 +161,7 @@ def serve_layout():
                         html.H3("The Falcon 2 Oz"),
                         html.Div(id="last-update-wg2"),
                         dcc.Graph(id="sparkline-wg2", config=dict(displayModeBar=False, staticPlot=True), style={"max-width":"200px", "height":"50px", "float":"left"}),
-                        html.H4(children=[df[df["shortname"]=="The Falcon 2 Oz"].query("update_date == update_date.max()")["price"].values[0], " Kč"], style={"height":"50px"}),
+                        html.H4(id="price-wg2", children=[df[df["shortname"]=="The Falcon 2 Oz"].query("update_date == update_date.max()")["price"].values[0], " Kč"], style={"height":"50px"}),
                         dcc.Link(children=["Přejít na produkt"], href=df_products[df_products["shortname"]=="The Falcon 2 Oz"]["url"].values[0], target="_blank")
                     ], width={"size":9})
                 ], className="border border-primary rounded ml-2 py-2")
@@ -255,9 +256,7 @@ def update_output(value, radio):
     dash.dependencies.Output('last-update-wp', 'children'),
     dash.dependencies.Output('sparkline-wp', 'figure'),
     dash.dependencies.Output('last-update-tl2', 'children'),
-    dash.dependencies.Output('sparkline-tl2', 'figure'),
-    dash.dependencies.Output('last-update-wg2', 'children'),
-    dash.dependencies.Output('sparkline-wg2', 'figure')],
+    dash.dependencies.Output('sparkline-tl2', 'figure')],
     [dash.dependencies.Input('auto-refresh', 'n_intervals')])
 def update_df(clicks):
     df = get_df_sqlite()
@@ -271,11 +270,19 @@ def update_df(clicks):
     figtl2 = create_sparkline("The Yale 2 Oz", df)
     last_uptate_tl2 = "Last update: " + str(df[df["shortname"] == "The Yale 2 Oz"]["update_date"].max())
 
+    return "Last refresh at: " + datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"), last_update_ml, figml, last_uptate_wp, figwp, last_uptate_tl2, figtl2
+
+@app.callback(
+    dash.dependencies.Output('sparkline-wg2', 'figure'),
+    dash.dependencies.Output('last-update-wg2', 'children'),
+    dash.dependencies.Output('price-wg2', 'children'),
+    dash.dependencies.Input('auto-refresh2', 'n_intervals'))
+def update_box4(clicks):
+    df = get_df_sqlite()
     figwg2 = create_sparkline("The Falcon 2 Oz", df)
     last_uptate_wg2 = "Last update: " + str(df[df["shortname"] == "The Falcon 2 Oz"]["update_date"].max())
-
-    return "Last refresh at: " + datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"), last_update_ml, figml, last_uptate_wp, figwp, last_uptate_tl2, figtl2, last_uptate_wg2, figwg2
-
+    price = df[df["shortname"]=="The Falcon 2 Oz"].query("update_date == update_date.max()")["price"].values[0], " Kč"
+    return  figwg2, last_uptate_wg2, price
 
 if __name__ == '__main__':
     app.run_server(host = "0.0.0.0", port = 8090, dev_tools_ui=True, debug=True,
