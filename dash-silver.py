@@ -20,7 +20,7 @@ import os
 app = dash.Dash(__name__, external_stylesheets=[dbc.themes.BOOTSTRAP])
 cache = Cache(app.server, config={
     'CACHE_TYPE': 'filesystem',
-    'CACHE_DIR': 'cache'
+    'CACHE_DIR': os.getenv('dash_cache')
     })
 
 cache.clear()
