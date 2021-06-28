@@ -2,4 +2,10 @@
 
 will be added
 
-if cron works this will appear
+## to get requirements with version numbers
+
+`pip list --format=freeze > requirements.txt`
+
+## to install all requirements
+
+`pip install -r requirements.txt`
