@@ -1,6 +1,5 @@
-FROM tiangolo/uwsgi-nginx-flask:python3.8
+FROM agostof/uwsgi-nginx-flask:python3.7
 COPY requirements.txt /tmp/
-RUN pip install -U pip
-RUN pip install -r /tmp/requirements.txt
+RUN pip install -U pip && pip install -r /tmp/requirements.txt
 WORKDIR /app/
 ENV NGINX_WORKER_PROCESSES auto
