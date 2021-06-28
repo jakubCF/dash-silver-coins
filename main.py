@@ -1,7 +1,17 @@
-from app import app
+from flask import Flask
+from dash import Dash
+import dash_bootstrap_components as dbc
+
 from layout_app1 import serve_layout_app1
 import callbacks
 
+server = Flask(__name__)
+app = Dash(
+    __name__,
+    server=server,
+    external_stylesheets=[dbc.themes.BOOTSTRAP])
+
+app.title = 'Silver Dash'
 app.layout = serve_layout_app1
 
 if __name__ == '__main__':
