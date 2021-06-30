@@ -1,6 +1,7 @@
+
 from customFce import *
-from app import app
 import dash
+from app import app
 
 @app.callback(
     dash.dependencies.Output('graph-rates', 'figure'),

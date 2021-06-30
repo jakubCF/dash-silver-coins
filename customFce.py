@@ -4,24 +4,21 @@ import pandas as pd
 import plotly.express as px
 import plotly.graph_objects as go
 import os
-from app import server
 from flask_caching import Cache
+from app import app
 
 if "dash_cache" in os.environ:
-    cache_folder = os.getenv('dash_cache')
+    dash_cache = os.getenv('dash_cache')
 else:
-    cache_folder = "./cache/"
+    dash_cache = "cache/"
 
-cache = Cache(server, config={
+cache = Cache(app.server, config={
     'CACHE_TYPE': 'filesystem',
-    'CACHE_DIR': cache_folder
+    'CACHE_DIR': dash_cache
     })
 
 cache.clear()
-#  [markdown]
-# Get data from DB to pandas
 
-# 
 db_file = os.getenv('db_silver')
 
 @cache.memoize(timeout=300)
@@ -64,7 +61,7 @@ def get_products():
     return df_products
 
 def create_sparkline(shortname, df):
-
+    print("####### creating sparklines #######")
     df = df[df["shortname"] == shortname]
     df = df[df["update_date"] >= (df["update_date"].max() - pd.DateOffset(30, 'D'))].sort_values("update_date")
 
