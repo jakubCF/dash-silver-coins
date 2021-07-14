@@ -8,8 +8,9 @@ def serve_layout_app1():
     df_products = get_products()
     df_rates = get_df_rates()
     layout = dbc.Container([
-        dcc.Interval(id = "auto-refresh", interval = 60*60*1000),
-        dcc.Interval(id = "auto-refresh2", interval = 60*60*1000),
+        dcc.Interval(id = "auto-refresh", interval = 60*1000),
+        dcc.Interval(id = "auto-refresh2", interval = 60*1000),
+        dcc.Interval(id = "auto-refresh-third-row", interval = 60*1000),
         html.Div(id='refresh-status'),
         dbc.Row([
             dbc.Col([html.H2('Dash - Silver Coins Price', className="text-center mt-3"),
@@ -76,6 +77,7 @@ def serve_layout_app1():
                 ], className="border border-primary rounded ml-2 py-2")
             ], width={"size":5})
         ], justify="center", className="mb-3"),
+        dbc.Row([], id="third-row", justify="center", className="mb-3"),
         dbc.Row([
             dbc.Col([
                 dcc.Dropdown(

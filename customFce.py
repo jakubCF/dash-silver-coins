@@ -4,8 +4,13 @@ import pandas as pd
 import plotly.express as px
 import plotly.graph_objects as go
 import os
+import string
+import random
 from flask_caching import Cache
 from app import app
+import dash_html_components as html
+import dash_core_components as dcc
+import dash_bootstrap_components as dbc
 
 if "dash_cache" in os.environ:
     dash_cache = os.getenv('dash_cache')
@@ -20,6 +25,10 @@ cache = Cache(app.server, config={
 cache.clear()
 
 db_file = os.getenv('db_silver')
+
+def clear_cache():
+    cache.clear()
+    return True
 
 @cache.memoize(timeout=300)
 def get_df_sqlite():
@@ -61,7 +70,7 @@ def get_products():
     return df_products
 
 def create_sparkline(shortname, df):
-    print("####### creating sparklines #######")
+    ##print("####### creating sparklines #######")
     df = df[df["shortname"] == shortname]
     df = df[df["update_date"] >= (df["update_date"].max() - pd.DateOffset(30, 'D'))].sort_values("update_date")
 
@@ -76,3 +85,24 @@ def create_sparkline(shortname, df):
         hovermode=False
     )
     return fig_sparkline
+
+def highlight_box(product_name):
+    df = get_df_sqlite()
+    df_products = get_products()
+    letters = string.ascii_lowercase
+    randomstr = ''.join(random.choice(letters) for i in range(3))
+    html_block = dbc.Col([
+                    dbc.Row([
+                        dbc.Col([
+                            html.Img(id='image-coin-' + randomstr, src=df_products[df_products["shortname"] == product_name]["imgurl"].values[0], className="img-fluid")
+                        ], width={"size":3}, className="my-auto"),
+                        dbc.Col([
+                            html.H3(product_name),
+                            html.Div(id="last-update-" + randomstr, children=["Last update: " + str(df[df["shortname"] == product_name]["update_date"].max())]),
+                            dcc.Graph(id="sparkline-" + randomstr, figure=create_sparkline(product_name, df), config=dict(displayModeBar=False, staticPlot=True), style={"max-width":"200px", "height":"50px", "float":"left"}),
+                            html.H4(id="price-" + randomstr, children=[df[df["shortname"]==product_name].query("update_date == update_date.max()")["price"].values[0], " Kč"], style={"height":"50px"}),
+                            dcc.Link(children=["Přejít na produkt"], href=df_products[df_products["shortname"]==product_name]["url"].values[0], target="_blank")
+                        ], width={"size":9})
+                    ], className="border border-primary rounded ml-2 py-2")
+                ], width={"size":5})
+    return html_block
