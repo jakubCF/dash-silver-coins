@@ -91,8 +91,7 @@ def highlight_box(product_name):
     df_products = get_products()
     letters = string.ascii_lowercase
     randomstr = ''.join(random.choice(letters) for i in range(3))
-    html_block = dbc.Col([
-                    dbc.Row([
+    html_block = dbc.Row([
                         dbc.Col([
                             html.Img(id='image-coin-' + randomstr, src=df_products[df_products["shortname"] == product_name]["imgurl"].values[0], className="img-fluid")
                         ], width={"size":3}, className="my-auto"),
@@ -104,5 +103,4 @@ def highlight_box(product_name):
                             dcc.Link(children=["Přejít na produkt"], href=df_products[df_products["shortname"]==product_name]["url"].values[0], target="_blank")
                         ], width={"size":9})
                     ], className="border border-primary rounded ml-2 py-2")
-                ], width={"size":5})
     return html_block

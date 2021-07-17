@@ -17,67 +17,18 @@ def serve_layout_app1():
                 html.P('''Visualising time series with Plotly - Dash''', className="text-center mb-3")
             ], width={"size":10})
         ], justify="center"),
+         dbc.Row([
+            dbc.Col([],id="st-col-one", width={"size":5}),
+            dbc.Col([], id="st-col-two", width={"size":5})
+            ], id="first-row", justify="center", className="mb-3"),
+         dbc.Row([
+            dbc.Col([],id="nd-col-one", width={"size":5}),
+            dbc.Col([], id="nd-col-two", width={"size":5})
+            ], id="second-row", justify="center", className="mb-3"),
         dbc.Row([
-            dbc.Col([
-                dbc.Row([
-                    dbc.Col([
-                        html.Img(id='image-mapleleaf', src=df_products[df_products["shortname"] == "Maple Leaf 1 Oz"]["imgurl"].values[0], className="img-fluid")
-                    ], width={"size":3}, className="my-auto"),
-                    dbc.Col([
-                        html.H3("Maple Leaf 1 Oz"),
-                        html.Div(id="last-update-ml"),
-                        dcc.Graph(id="sparkline-ml", config=dict(displayModeBar=False, staticPlot=True), style={"max-width":"200px", "height":"50px", "float":"left"}),
-                        html.H4(children=[df[df["shortname"]=="Maple Leaf 1 Oz"].query("update_date == update_date.max()")["price"].values[0], " Kč"], style={"height":"50px"}),
-                        dcc.Link(children=["Přejít na produkt"], href=df_products[df_products["shortname"]=="Maple Leaf 1 Oz"]["url"].values[0], target="_blank")
-                    ], width={"size":9})
-                ], className="border border-primary rounded mr-2 py-2")
-            ], width={"size":5}),
-            dbc.Col([
-                dbc.Row([
-                    dbc.Col([
-                        html.Img(id='image-coin-wiener', src=df_products[df_products["shortname"] == "Wiener Philharmoniker 1 Oz"]["imgurl"].values[0], className="img-fluid")
-                    ], width={"size":3}, className="my-auto"),
-                    dbc.Col([
-                        html.H3("Wiener Philharmoniker 1 Oz"),
-                        html.Div(id="last-update-wp"),
-                        dcc.Graph(id="sparkline-wp", config=dict(displayModeBar=False, staticPlot=True), style={"max-width":"200px", "height":"50px", "float":"left"}),
-                        html.H4(children=[df[df["shortname"]=="Wiener Philharmoniker 1 Oz"].query("update_date == update_date.max()")["price"].values[0], " Kč"], style={"height":"50px"}),
-                        dcc.Link(children=["Přejít na produkt"], href=df_products[df_products["shortname"]=="Wiener Philharmoniker 1 Oz"]["url"].values[0], target="_blank")
-                    ], width={"size":9})
-                ], className="border border-primary rounded ml-2 py-2")
-            ], width={"size":5})
-        ], justify="center", className="mb-3"),
-        dbc.Row([
-            dbc.Col([
-                dbc.Row([
-                    dbc.Col([
-                        html.Img(id='image-tl2', src=df_products[df_products["shortname"] == "The Yale 2 Oz"]["imgurl"].values[0], className="img-fluid")
-                    ], width={"size":3}, className="my-auto"),
-                    dbc.Col([
-                        html.H3("The Yale 2 Oz"),
-                        html.Div(id="last-update-tl2"),
-                        dcc.Graph(id="sparkline-tl2", config=dict(displayModeBar=False, staticPlot=True), style={"max-width":"200px", "height":"50px", "float":"left"}),
-                        html.H4(children=[df[df["shortname"]=="The Yale 2 Oz"].query("update_date == update_date.max()")["price"].values[0], " Kč"], style={"height":"50px"}),
-                        dcc.Link(children=["Přejít na produkt"], href=df_products[df_products["shortname"]=="The Yale 2 Oz"]["url"].values[0], target="_blank")
-                    ], width={"size":9})
-                ], className="border border-primary rounded mr-2 py-2")
-            ], width={"size":5}),
-            dbc.Col([
-                dbc.Row([
-                    dbc.Col([
-                        html.Img(id='image-coin-wg2', src=df_products[df_products["shortname"] == "The Falcon 2 Oz"]["imgurl"].values[0], className="img-fluid")
-                    ], width={"size":3}, className="my-auto"),
-                    dbc.Col([
-                        html.H3("The Falcon 2 Oz"),
-                        html.Div(id="last-update-wg2"),
-                        dcc.Graph(id="sparkline-wg2", config=dict(displayModeBar=False, staticPlot=True), style={"max-width":"200px", "height":"50px", "float":"left"}),
-                        html.H4(id="price-wg2", children=[df[df["shortname"]=="The Falcon 2 Oz"].query("update_date == update_date.max()")["price"].values[0], " Kč"], style={"height":"50px"}),
-                        dcc.Link(children=["Přejít na produkt"], href=df_products[df_products["shortname"]=="The Falcon 2 Oz"]["url"].values[0], target="_blank")
-                    ], width={"size":9})
-                ], className="border border-primary rounded ml-2 py-2")
-            ], width={"size":5})
-        ], justify="center", className="mb-3"),
-        dbc.Row([], id="third-row", justify="center", className="mb-3"),
+            dbc.Col([],id="rd-col-one", width={"size":5}),
+            dbc.Col([], id="rd-col-two", width={"size":5})
+            ], id="third-row", justify="center", className="mb-3"),
         dbc.Row([
             dbc.Col([
                 dcc.Dropdown(
