@@ -99,26 +99,28 @@ def highlight_box(product_name):
                         ], width={"size":3}, className="my-auto"),
                         dbc.Col([
                             html.H3(product_name),
-                            html.Div(id="last-update-" + randomstr, children=["Last update: " + str(df["update_date"].max())]),
-                            dcc.Graph(id="sparkline-" + randomstr, figure=create_sparkline(df), config=dict(displayModeBar=False, staticPlot=True), style={"width":"200px", "height":"50px", "float":"left"}),
-                            html.H4(id="price-" + randomstr, children=[df.query("update_date == update_date.max()")["price"].values[0], " Kč"], style={"height":"50px"}),
-                            dcc.Link(children=["Přejít na produkt"], href=df_products[df_products["shortname"]==product_name]["url"].values[0], target="_blank")
-                        ], width={"size":6}),
-                        dbc.Col([
-                            html.Div([
-                                html.Span(["All time high: "]),
-                                html.B([str(alltimehigh)]),
-                                html.P()
-                            ]),
-                            html.Div([
-                                html.Span(["30 day MAX: "]),
-                                html.B([str(df["price"].max())])
-                            ]),
-                            html.Div([
-                                html.Span(["30 day MIN: "]),
-                                html.B([str(df["price"].min())])
-                            ])
-                            
-                        ], width={"size":3}, className="my-auto")
+                            dbc.Col([
+                                html.Div(id="last-update-" + randomstr, children=["Last update: " + str(df["update_date"].max())]),
+                                dcc.Graph(id="sparkline-" + randomstr, figure=create_sparkline(df), config=dict(displayModeBar=False, staticPlot=True), style={"width":"200px", "height":"50px", "float":"left"}),
+                                html.H4(id="price-" + randomstr, children=[df.query("update_date == update_date.max()")["price"].values[0], " Kč"], style={"height":"50px"}),
+                                dcc.Link(children=["Přejít na produkt"], href=df_products[df_products["shortname"]==product_name]["url"].values[0], target="_blank")
+                            ], width={"size":8}, className="float-left"),
+                            dbc.Col([
+                                html.Div([
+                                    html.Span(["All time high: "]),
+                                    html.B([str(alltimehigh)]),
+                                    html.P()
+                                ]),
+                                html.Div([
+                                    html.Span(["30 day MAX: "]),
+                                    html.B([str(df["price"].max())])
+                                ]),
+                                html.Div([
+                                    html.Span(["30 day MIN: "]),
+                                    html.B([str(df["price"].min())])
+                                ])
+                            ], width={"size":4}, className="my-auto float-right")
+                        ]),
+                        
                     ], className="border border-primary rounded ml-2 py-2")
     return html_block
