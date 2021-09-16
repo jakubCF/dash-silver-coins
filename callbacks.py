@@ -16,19 +16,29 @@ def update_dfall(clicks):
 
     if int(datetime.datetime.now().strftime("%M")) == 40:
         clear_cache()
-        print("Cache clearing successful " + datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
+        # print("Cache clearing successful " + datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
         return "Last refresh at: " + datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     else:
-        print("No cache clearing " + datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
+        # print("No cache clearing " + datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
         raise PreventUpdate
 
 @app.callback(
-    Output('graph-rates', 'figure'),
-    [Input('dropdown-rates', 'value')])
-def update_output(value):
-    df_rates = get_df_rates()
-    fig = px.line(df_rates, x = "update_date", y = value)
-    return fig
+    Output('st-col-one', 'children'),
+    Output('st-col-two', 'children'),
+    Output('nd-col-one', 'children'),
+    Output('nd-col-two', 'children'),
+    Output('rd-col-one', 'children'),
+    Output('rd-col-two', 'children'),
+    Input('auto-refresh-third-row', 'n_intervals')
+)
+def third_row(clicks):
+    html_block1 = highlight_box("Maple Leaf 1 Oz")
+    html_block2 = highlight_box("Wiener Philharmoniker 1 Oz") #+ highlight_box("The White Horse 2 Oz")
+    html_block3 = highlight_box("The Yale 2 Oz")
+    html_block4 = highlight_box("The Falcon 2 Oz")
+    html_block5 = highlight_box("Dragon 2 Oz")
+    html_block6 = highlight_box("Griffin 2 Oz")
+    return html_block1, html_block2, html_block3, html_block4, html_block5, html_block6
 
 @app.callback(
     [Output('image-coin', 'src'),
@@ -58,22 +68,13 @@ def update_output(value, radio):
 
 
 @app.callback(
-    Output('st-col-one', 'children'),
-    Output('st-col-two', 'children'),
-    Output('nd-col-one', 'children'),
-    Output('nd-col-two', 'children'),
-    Output('rd-col-one', 'children'),
-    Output('rd-col-two', 'children'),
-    Input('auto-refresh-third-row', 'n_intervals')
-)
-def third_row(clicks):
-    html_block1 = highlight_box("Maple Leaf 1 Oz")
-    html_block2 = highlight_box("Wiener Philharmoniker 1 Oz") #+ highlight_box("The White Horse 2 Oz")
-    html_block3 = highlight_box("The Yale 2 Oz")
-    html_block4 = highlight_box("The Falcon 2 Oz")
-    html_block5 = highlight_box("Dragon 2 Oz")
-    html_block6 = highlight_box("Griffin 2 Oz")
-    return html_block1, html_block2, html_block3, html_block4, html_block5, html_block6
+    Output('graph-rates', 'figure'),
+    [Input('dropdown-rates', 'value')])
+def update_output(value):
+    df_rates = get_df_rates()
+    fig = px.line(df_rates, x = "update_date", y = value)
+
+    return fig
 
 # @app.callback(
 #     Output('sparkline-wg2', 'figure'),

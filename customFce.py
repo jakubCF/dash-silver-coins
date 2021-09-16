@@ -69,10 +69,8 @@ def get_products():
     df_products = df_products.sort_values(by=['shortname'])
     return df_products
 
-def create_sparkline(shortname, df):
+def create_sparkline(df):
     ##print("####### creating sparklines #######")
-    df = df[df["shortname"] == shortname]
-    df = df[df["update_date"] >= (df["update_date"].max() - pd.DateOffset(30, 'D'))].sort_values("update_date")
 
     fig_sparkline = px.line(df, x="update_date", y="price",
         labels={"price":"Price", "update_date":"Date"}, height= 50)
@@ -88,6 +86,10 @@ def create_sparkline(shortname, df):
 
 def highlight_box(product_name):
     df = get_df_sqlite()
+    df = df[df["shortname"]==product_name]
+    alltimehigh = df["price"].max()
+    df = df[df["update_date"] >= (df["update_date"].max() - pd.DateOffset(30, 'D'))].sort_values("update_date")
+    
     df_products = get_products()
     letters = string.ascii_lowercase
     randomstr = ''.join(random.choice(letters) for i in range(3))
@@ -97,10 +99,26 @@ def highlight_box(product_name):
                         ], width={"size":3}, className="my-auto"),
                         dbc.Col([
                             html.H3(product_name),
-                            html.Div(id="last-update-" + randomstr, children=["Last update: " + str(df[df["shortname"] == product_name]["update_date"].max())]),
-                            dcc.Graph(id="sparkline-" + randomstr, figure=create_sparkline(product_name, df), config=dict(displayModeBar=False, staticPlot=True), style={"max-width":"200px", "height":"50px", "float":"left"}),
-                            html.H4(id="price-" + randomstr, children=[df[df["shortname"]==product_name].query("update_date == update_date.max()")["price"].values[0], " Kč"], style={"height":"50px"}),
+                            html.Div(id="last-update-" + randomstr, children=["Last update: " + str(df["update_date"].max())]),
+                            dcc.Graph(id="sparkline-" + randomstr, figure=create_sparkline(df), config=dict(displayModeBar=False, staticPlot=True), style={"width":"200px", "height":"50px", "float":"left"}),
+                            html.H4(id="price-" + randomstr, children=[df.query("update_date == update_date.max()")["price"].values[0], " Kč"], style={"height":"50px"}),
                             dcc.Link(children=["Přejít na produkt"], href=df_products[df_products["shortname"]==product_name]["url"].values[0], target="_blank")
-                        ], width={"size":9})
+                        ], width={"size":6}),
+                        dbc.Col([
+                            html.Div([
+                                html.Span(["All time high: "]),
+                                html.B([str(alltimehigh)]),
+                                html.P()
+                            ]),
+                            html.Div([
+                                html.Span(["30 day MAX: "]),
+                                html.B([str(df["price"].max())])
+                            ]),
+                            html.Div([
+                                html.Span(["30 day MIN: "]),
+                                html.B([str(df["price"].min())])
+                            ])
+                            
+                        ], width={"size":3}, className="my-auto")
                     ], className="border border-primary rounded ml-2 py-2")
     return html_block
