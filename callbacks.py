@@ -32,12 +32,17 @@ def update_dfall(clicks):
     Input('auto-refresh-third-row', 'n_intervals')
 )
 def third_row(clicks):
+    ####
+    #### The White Horse 2 Oz
+    #### The White Greyhound 2 Oz
+    #### The Queen´s Beasts 2 Oz
+    ####
     html_block1 = highlight_box("Maple Leaf 1 Oz")
     html_block2 = highlight_box("Wiener Philharmoniker 1 Oz") #+ highlight_box("The White Horse 2 Oz")
-    html_block3 = highlight_box("The Yale 2 Oz")
+    html_block3 = highlight_box("Bull 2 Oz")
     html_block4 = highlight_box("The Falcon 2 Oz")
-    html_block5 = highlight_box("Dragon 2 Oz")
-    html_block6 = highlight_box("Griffin 2 Oz")
+    html_block5 = highlight_box("The Yale 2 Oz")
+    html_block6 = highlight_box("The White Lion 2 Oz")
     return html_block1, html_block2, html_block3, html_block4, html_block5, html_block6
 
 @app.callback(
