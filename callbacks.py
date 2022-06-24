@@ -39,10 +39,11 @@ def third_row(clicks):
     ####
     html_block1 = highlight_box("Maple Leaf 1 Oz")
     html_block2 = highlight_box("Wiener Philharmoniker 1 Oz") #+ highlight_box("The White Horse 2 Oz")
-    html_block3 = highlight_box("Robin Hood 1 Oz - Silver")
-    html_block4 = highlight_box("Panna Mariana 1 Oz - Silver")
-    html_block5 = highlight_box("Maly John 1 Oz - Silver")
-    html_block6 = dbc.Row([])
+    html_block3 = highlight_box("TRTB - The Lion 2 Oz")
+    html_block4 = highlight_box("Robin Hood 1 Oz - Silver")
+    html_block5 = highlight_box("Panna Mariana 1 Oz - Silver")
+    html_block6 = highlight_box("Maly John 1 Oz - Silver")
+
     return html_block1, html_block2, html_block3, html_block4, html_block5, html_block6
 
 @app.callback(
