@@ -56,7 +56,9 @@ def update_output(value, radio):
     df_products = get_products()
     selected_df = df[df["coin"]==value]
 
-    if radio == "line":
+    if selected_df.empty:
+        fig = {}
+    elif radio == "line":
         fig = px.line(selected_df, x=selected_df.index, y="last",
             labels={"last":"Price", "index":"Date"})
 
@@ -67,7 +69,7 @@ def update_output(value, radio):
                     low=selected_df['min'],
                     close=selected_df['last'])])
     else:
-        fig = []
+        fig = {}
     
     url = df_products[df_products["shortname"] == value]["imgurl"].values[0]
     return url, fig
